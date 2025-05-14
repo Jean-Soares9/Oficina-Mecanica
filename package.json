@@ -1,0 +1,27 @@
+{
+  "name": "oficina-mecanica",
+  "version": "1.0.0",
+  "description": "Desenvolvimento de um oficina mecânica usando electron e mongoDB Atlas",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jean-Soares9/Oficina-Mecanica.git"
+  },
+  "author": "Jean Andrade",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jean-Soares9/Oficina-Mecanica/issues"
+  },
+  "homepage": "https://github.com/Jean-Soares9/Oficina-Mecanica#readme",
+  "devDependencies": {
+    "electron": "^36.2.0"
+  },
+  "dependencies": {
+    "jspdf": "^3.0.1",
+    "mongoose": "^8.14.3"
+  }
+}
