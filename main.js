@@ -25,6 +25,7 @@ const createWindow = () => {
     win = new BrowserWindow({
         width: 800,
         height: 600,
+        icon: path.join(__dirname, 'public', 'img', 'favicon.ico'),
         //autoHideMenuBar: true,
         //minimizable: false,
         resizable: false,
@@ -32,11 +33,12 @@ const createWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
+        
     })
 
     // menu personalizado
     Menu.setApplicationMenu(Menu.buildFromTemplate(template))
-
+    
     win.loadFile('./src/views/index.html')
 }
 
@@ -50,3 +52,70 @@ app.whenReady().then(() => {
         }
     })
 })
+
+// template do menu
+const template = [
+    {
+        label: 'Cadastro',
+        submenu: [
+            {
+                label: 'Clientes',
+                click: () => clientWindow()
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Sair',
+                click: () => app.quit(),
+                accelerator: 'Alt+F4'
+            }
+        ]
+    },
+    {
+        label: 'Relatórios',
+        submenu: [
+            {
+                label: 'Clientes',
+                click: () => relatorioClientes()
+            }
+        ]
+    },
+    {
+        label: 'Ferramentas',
+        submenu: [
+            {
+                label: 'Aplicar zoom',
+                role: 'zoomIn'
+            },
+            {
+                label: 'Reduzir',
+                role: 'zoomOut'
+            },
+            {
+                label: 'Restaurar o zoom padrão',
+                role: 'resetZoom'
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Recarregar',
+                role: 'reload'
+            },
+            {
+                label: 'Ferramentas do desenvolvedor',
+                role: 'toggleDevTools'
+            }
+        ]
+    },
+    {
+        label: 'Ajuda',
+        submenu: [
+            {
+                label: 'Sobre',
+                click: () => aboutWindow()
+            }
+        ]
+    }
+]
