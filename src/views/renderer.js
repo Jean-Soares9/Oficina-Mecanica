@@ -10,3 +10,29 @@ function client() {
     //uso da api(autorizada no preload.js)
     api.clientWindow()
 }
+
+// inserção da data no rodapé
+function obterData() {
+    const data = new Date()
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    }
+    return data.toLocaleDateString('pt-BR', options)
+}
+
+document.getElementById('dataAtual').innerHTML = obterData()
+
+// Troca do ícone do banco de dados (status de conexão)
+// Uso de api do preload.js
+api.dbStatus((event, message) => {
+    // Teste de recebimento da mensagem
+    console.log(message)
+    if (message === "conectar") {
+        document.getElementById('statusdb').src = "../public/img/dbon.png"
+    } else {
+        document.getElementById('statusdb').src = "../public/img/dboff.png"
+    }
+})

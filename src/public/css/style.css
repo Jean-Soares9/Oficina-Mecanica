@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+/** Importação de fontes off-line **/
+@font-face {
+    font-family: "Fredoka";
+    src: url("../Fredoka/Fredoka-VariableFont_wdth\,wght.ttf");
+}
+
 /* Variáveis para as cores das notas */
 :root {
     --amarelo: #fff68f;
@@ -18,3 +24,166 @@
     border: 0;
     box-sizing: border-box;
 }
+
+html, body {
+    height: 100%; /* Certificar que a altura seja 100% */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Remove a rolagem horizontal */
+}
+
+body {
+    font-family: "Fredoka", Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    padding: 15px;
+}
+
+/** Rodapé **/
+footer {
+    width: 100%;
+    height: 35px;
+    background-color: var(--cinza);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+}
+
+footer p {
+    font-size: 1.1em;
+    margin: 5px 0px 0px 5px;
+}
+
+/* Estilos do título */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8em;
+    line-height: 1.2;
+}
+
+/* Estilo formulário */
+.form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px; /* Ajuste o valor conforme necessário */
+    margin-top: 20px;
+    overflow: hidden; /* Previne a rolagem extra do formulário */
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas de tamanho igual */
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #555;
+}
+
+input {
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+#buscarCepButton {
+    background-color: #007bff;
+    margin-right: 10px;
+}
+
+#buscarCepButton:hover {
+    background-color: #0056b3;
+}
+
+#mensagemSucesso {
+    color: green;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr; /* Uma coluna para telas menores */
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    input, button {
+        font-size: 1em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    input, button {
+        padding: 10px; /* Ajuste de tamanho para telas muito pequenas */
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+}
+
+/* Ocultar o id do cliente */
+#inputIdClient {
+    display: none;
+}
+
+
+  
+  
