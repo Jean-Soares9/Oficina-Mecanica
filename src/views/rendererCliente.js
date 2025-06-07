@@ -1,23 +1,58 @@
-// Buscar CEP
+const cepInput = document.getElementById('inputCEPClient')
+const cepError = document.getElementById('cepErrorMessage')
+
+cepInput.addEventListener('input', (e) => {
+    let cep = e.target.value.replace(/\D/g, '')
+    if (cep.length > 5) {
+        cep = cep.slice(0, 5) + '-' + cep.slice(5, 8)
+    }
+    e.target.value = cep
+    cepError.style.display = 'none'
+})
+
+cepInput.addEventListener('input', buscarCEP)
+
 function buscarCEP() {
-    //console.log("teste do evento blur")
-    //armazenar o cep digitado na variável
-    let cep = document.getElementById('inputCEPClient').value
-    //console.log(cep) //teste de recebimento do CEP
-    //"consumir" a API do ViaCEP
-    let urlAPI = `https://viacep.com.br/ws/${cep}/json/`
-    //acessando o web service par abter os dados
-    fetch(urlAPI)
+    const cep = cepInput.value.replace(/\D/g, '')
+
+    if (cep.length !== 8) {
+        cepError.innerText = 'Deve conter 8 números.'
+        cepError.style.display = 'block'
+        limparCamposEndereco()
+        return
+    }
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
         .then(response => response.json())
         .then(dados => {
-            //extração dos dados
+            if (dados.erro) {
+                cepError.innerText = 'CEP não encontrado.'
+                cepError.style.display = 'block'
+                limparCamposEndereco()
+                return
+            }
+
             document.getElementById('inputAddressClient').value = dados.logradouro
             document.getElementById('inputNeighborhoodClient').value = dados.bairro
             document.getElementById('inputCityClient').value = dados.localidade
             document.getElementById('inputUFClient').value = dados.uf
+
+            cepError.style.display = 'none'
         })
-        .catch(error => console.log(error))
+        .catch(() => {
+            cepError.innerText = 'Erro ao buscar o CEP. Verifique sua conexão.'
+            cepError.style.display = 'block'
+            limparCamposEndereco()
+        })
 }
+
+function limparCamposEndereco() {
+    document.getElementById('inputAddressClient').value = ''
+    document.getElementById('inputNeighborhoodClient').value = ''
+    document.getElementById('inputCityClient').value = ''
+    document.getElementById('inputUFClient').value = ''
+}
+
 
 // Criar um vetor globar para manipular os dados do cliente
 let arrayClient = []
@@ -29,8 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnDelete.disabled = true
     // Ativar o botão adicionar
     btnCreate.disabled = false
-    // Foco na busca do cliente
-    foco.focus()
+    
 })
 
 //captura dos dados dos inputs do formulário (Passo 1: Fluxo)
@@ -107,3 +141,37 @@ frmClient.addEventListener('submit', async (event) => {
 
 // == Fim CRUD Create/Update ==================================
 // ============================================================
+
+// ============================================================
+// == Reset Form ==============================================
+function resetForm() {
+    location.reload()
+}
+
+api.resetForm((args) => {
+    resetForm()
+})
+// == Fim Reset Form ==========================================
+// ============================================================
+
+// Máscara de CPF
+document.getElementById('inputCPFClient').addEventListener('input', function (e) {
+    let cpf = e.target.value.replace(/\D/g, ''); // remove tudo que não for número
+    if (cpf.length > 11) cpf = cpf.slice(0, 11); // limita em 11 dígitos
+    cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+    cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+    cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = cpf;
+});
+
+// Máscara de Telefone
+document.getElementById('inputPhoneClient').addEventListener('input', function (e) {
+    let phone = e.target.value.replace(/\D/g, ''); // remove tudo que não for número
+    if (phone.length > 11) phone = phone.slice(0, 11); // limita em 11 dígitos
+    if (phone.length <= 10) {
+        phone = phone.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+        phone = phone.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+    e.target.value = phone;
+});
